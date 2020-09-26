@@ -24,7 +24,6 @@ m4_stage_one() {
 ncurses_stage_one() {
     FILEURL="http://ftp.gnu.org/gnu/ncurses/ncurses-6.2.tar.gz";
     NAME="ncurses-6.2";
-    BLDDIR="/tmp/build-$NAME";
     SRCDIR="$source_packager_source_dir/$NAME"
 
     if [ -d "$SRCDIR" ]; then
@@ -42,12 +41,10 @@ ncurses_stage_one() {
 
         mkdir -p build;
         
-        pushd build;
-        
-        ../configure;
-        make -j$source_packager_number_of_jobs -C include;
-        make -j$source_packager_number_of_jobs -C progs tic;
-        
+        pushd build;        
+            ../configure;
+            make -j$source_packager_number_of_jobs -C include;
+            make -j$source_packager_number_of_jobs -C progs tic;
         popd;
 
         ./configure --prefix="$source_packager_environment" \
@@ -60,48 +57,54 @@ ncurses_stage_one() {
             --without-normal \
             --enable-widec;
         make -j$source_packager_number_of_jobs;
-        # make TIC_PATH=$(pwd)/build/progs/tic install;
-        # echo "INPUT(-lncursesw)" > "$source_packager_environment"/usr/lib/libncurses.so;
-        # mv -v "$source_packager_environment"/usr/lib/libncursesw.so.6* "$source_packager_environment"/lib;
-        # ln -sfv ../../lib/$(readlink $source_packager_environment/usr/lib/libncursesw.so) "$source_packager_environment"/usr/lib/libncursesw.so;
+        make TIC_PATH=$(pwd)/build/progs/tic install;
+        echo "INPUT(-lncursesw)" > "$source_packager_library"/libncurses.so;
     cd -;
 }
 
 bash_stage_one() {
     FILEURL="http://ftp.gnu.org/gnu/bash/bash-5.0.tar.gz"
     NAME="bash-5.0";
-    BLDDIR="/tmp/build-$NAME";
     SRCDIR="$source_packager_source_dir/$NAME"
     from_tz_file "$FILEURL" "$NAME";
 
     cd "$SRCDIR";
-        ./configure --prefix=/usr \
+        ./configure --prefix="$source_packager_environment" \
             --build=$(support/config.guess) \
-            --without-bash-malloc;
+            --without-bash-malloc &&
         make -j$source_packager_number_of_jobs && \
-            make DESTDIR="$source_packager_environment" install
-        mv -v "$source_packager_environment"/usr/bin/bash "$source_packager_environment"/bin/bash;
+            make -j$source_packager_number_of_jobs install;
         ln -sv bash "$source_packager_environment"/bin/sh;
     cd -;
 }
 
 coreutils_stage_one() {
-    FILEURL="http://ftp.gnu.org/gnu/coreutils/coreutils-8.32.tar.xz"
-    NAME="coreutils-8.32";
+    #FILEURL="http://ftp.gnu.org/gnu/coreutils/coreutils-8.32.tar.xz"
+    BRANCH="master";
+    REPO="https://github.com/coreutils/coreutils";
+    NAME="coreutils";
     BLDDIR="/tmp/build-$NAME";
     SRCDIR="$source_packager_source_dir/$NAME"
-    from_tz_file "$FILEURL" "$NAME";
-
-    if [ -d "$BLDDIR" ]; then
-        rm -rf "$BLDDIR";
+    
+    if ! [ -d "$SRCDIR" ]; then
+        generate_git_clone "$REPO" "$SRCDIR" "$BRANCH";
     fi;
 
-    mkdir "$BLDDIR" -pv;
-    cd "$BLDDIR";
-        ls "$SRCDIR";
+    cd "$SRCDIR";
+        if ! [ -f ./configure ]; then 
+            ./bootstrap;
+        fi;
+        # echo ./configure --prefix="$source_packager_environment" \
+        #     --build=$(build-aux/config.guess) \
+        #     --enable-install-program=hostname \
+        #     --enable-no-install-program=kill,uptime
+            # && \
+            #make -j$source_packager_number_of_jobs;# && \
+                #make -j$source_packager_number_of_jobs install;
     cd -;
 }
 
 # m4_stage_one;
-ncurses_stage_one;
+# ncurses_stage_one;
 # bash_stage_one
+coreutils_stage_one
