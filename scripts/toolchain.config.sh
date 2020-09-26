@@ -1,4 +1,4 @@
-export source_packager_environment="$HOME/pykgr";
+export source_packager_environment="/home/dylan/pykgr";
 
 export source_packager_builder_environment="$source_packager_environment/builder";
 export source_packager_library="$source_packager_builder_environment/lib";
