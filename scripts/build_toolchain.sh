@@ -101,6 +101,7 @@ get_kernel_headers() {
         rm usr/include/Makefile;
         cp -rfv usr/include/* "$source_packager_include"/;
     cd -;
+    rm -rf "$BLDDIR";
 }
 
 glibc_stage_one() {

@@ -1,3 +1,6 @@
-*.pyc
 __pycache__
+*.pyc
 a.out
+wget-lost
+env
+.vscode
