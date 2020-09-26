@@ -1,12 +1,16 @@
-export source_packager_environment="$HOME/environment";
-export source_packager_library="$source_packager_environment/lib";
-export source_packager_library_64="$source_packager_environment/lib64";
-export source_packager_include="$source_packager_environment/include";
+export source_packager_environment="$HOME/pykgr";
+
+export source_packager_builder_environment="$source_packager_environment/builder";
+export source_packager_library="$source_packager_builder_environment/lib";
+export source_packager_library_64="$source_packager_builder_environment/lib64";
+export source_packager_include="$source_packager_builder_environment/include";
 export source_packager_source_dir="/var/storage/environment-sources";
 export source_packager_source_archives_dir="$source_packager_source_dir/tarballs";
 export source_packager_target="x86_64-pc-linux-gnu";#$(uname -m)-src_pkgr-linux-gnu";
 export source_packager_number_of_jobs="10";
+
 export LC_ALL=POSIX;
+export PATH="$source_packager_builder_environment/bin:/usr/bin:/bin";
 
 generate_git_clone() {
     BRANCH="$3";

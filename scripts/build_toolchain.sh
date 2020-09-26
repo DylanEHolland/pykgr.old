@@ -3,7 +3,7 @@
 . scripts/toolchain.config.sh;
 
 binutils_stage_one() {
-    SRCDIR="$source_packager_environment/binutils";
+    SRCDIR="$source_packager_builder_environment/binutils";
     FILEURL="https://ftp.gnu.org/gnu/binutils/binutils-2.35.tar.gz";
     NAME="binutils-2.35";
     BLDDIR="/tmp/build-$NAME";
@@ -18,7 +18,7 @@ binutils_stage_one() {
 
     cd "$BLDDIR";
         "$SRCDIR"/configure \
-            --prefix="$source_packager_environment" \
+            --prefix="$source_packager_builder_environment" \
             --with-lib-path="$source_packager_library" \
             --disable-werror;
         make -j$source_packager_number_of_jobs && make -j$source_packager_number_of_jobs install;
@@ -57,7 +57,7 @@ gcc_stage_one() {
     # Configure and build a barely useable gcc
     cd "$BLDDIR";
         "$SRCDIR"/configure \
-            --prefix="$source_packager_environment" \
+            --prefix="$source_packager_builder_environment" \
             --with-glibc-version=2.11 \
             --with-newlib \
             --without-headers \
@@ -111,7 +111,7 @@ glibc_stage_one() {
     SRCDIR="$source_packager_source_dir/$NAME";
 
     if ! [ -d "$SRCDIR" ]; then
-        echo generate_git_clone "$REPO" "$SRCDIR" "$BRANCH";
+        generate_git_clone "$REPO" "$SRCDIR" "$BRANCH";
     fi;
 
     if [ -d "$BLDDIR" ]; then
@@ -119,7 +119,6 @@ glibc_stage_one() {
     fi;
 
     if ! [ -f "$source_packager_library"/ld-lsb.so.3 ]; then
-        echo "Run lib updater";
         ln -sv /lib/ld-linux.so.2 "$source_packager_library"/ld-lsb.so.3;
         ln -sfv /usr/lib64/ld-linux-x86-64.so.2 "$source_packager_library_64";
         ln -sfv "$source_packager_library_64"/ld-linux-x86-64.so.2 "$source_packager_library_64"/ld-lsb-x86-64.so.3;
@@ -129,7 +128,7 @@ glibc_stage_one() {
         mkdir "$BLDDIR" -pv;
         pushd "$BLDDIR";
             "$SRCDIR"/configure \
-                --prefix="$source_packager_environment" \
+                --prefix="$source_packager_builder_environment" \
                 --build=$("$SRCDIR"/scripts/config.guess) \
                 --enable-kernel=3.2 \
                 --with-headers="$source_packager_include" \
@@ -137,10 +136,9 @@ glibc_stage_one() {
                 libc_cv_slibdir="$source_packager_library";
             make -j$source_packager_number_of_jobs && \ 
                 make -j$source_packager_number_of_jobs install;
-                #make DESTDIR="$source_packager_environment" -j$source_packager_number_of_jobs install;
         popd;
     cd -;
-    "$source_packager_environment"/libexec/gcc/"$source_packager_target"/10.2.0/install-tools/mkheaders
+    "$source_packager_builder_environment"/libexec/gcc/"$source_packager_target"/10.2.0/install-tools/mkheaders
 }
 
 lib_cpp_stage_one() {
@@ -159,23 +157,19 @@ lib_cpp_stage_one() {
     cd "$BLDDIR";
         "$SRCDIR"/libstdc++-v3/configure \
             --build=$("$SRCDIR"/config.guess) \
-            --prefix="$source_packager_environment" \
+            --prefix="$source_packager_builder_environment" \
             --disable-multilib \
             --disable-nls \
             --with-gxx-include-dir="$source_packager_include"/c++/10.2.0;
         make -j$source_packager_number_of_jobs && \ 
             make -j$source_packager_number_of_jobs install;
-            #make DESTDIR="$source_packager_environment" -j$source_packager_number_of_jobs install;
     cd -;
 }
 
-export PATH="$source_packager_environment/bin:/usr/bin:/bin";
+# Build intermediate compiler
 
-# Stage one compiler
-# binutils_stage_one;
-# gcc_stage_one;
-# get_kernel_headers;
-# glibc_stage_one;
-# lib_cpp_stage_one;
-
-
+binutils_stage_one;
+gcc_stage_one;
+get_kernel_headers;
+glibc_stage_one;
+lib_cpp_stage_one;
