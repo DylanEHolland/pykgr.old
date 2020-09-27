@@ -19,7 +19,6 @@ class Builder:
 class BuilderData:
     def __init__(self, **kwargs):
         self.directory = None
-        self.make_opts = 1
 
         self_keys = [row for row in dir(self) if "__" not in row and not callable(getattr(self, row))]
         for key in kwargs:

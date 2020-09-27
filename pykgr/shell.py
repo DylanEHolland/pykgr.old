@@ -70,7 +70,7 @@ class Command:
     def __call__(self, *args, **kwargs):
         self.args = args
 
-        return self.run()
+        return self.run(display_output=kwargs.get('display_output'))
 
     def __init__(self, command, *args, **kwargs):
         self.program = command
@@ -89,8 +89,11 @@ class Command:
         )
 
         if display_output:
-            for line in iter(process.stdout.readline, ''):
-                sys.stdout.write(line)
+            for line in iter(process.stdout.readline, b''):
+                sys.stdout.write(line.decode())
 
         output, error = process.communicate()
+        if type(output) == bytes:
+            output = output.decode()
+
         return output
