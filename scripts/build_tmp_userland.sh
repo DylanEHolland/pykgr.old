@@ -208,13 +208,13 @@ grep_stage_one() {
 
     from_tz_file "$FILE_URL" "$NAME";
 
-    # cd "$SRCDIR";
-    #     ./configure \
-    #         --prefix="$source_packager_builder_environment" \
-    #         --bindir="$source_packager_builder_environment"/bin && \
-    #     make -j$source_packager_number_of_jobs && \
-    #         make -j$source_packager_number_of_jobs install; 
-    # cd -;
+    cd "$SRCDIR";
+        ./configure \
+            --prefix="$source_packager_builder_environment" \
+            --bindir="$source_packager_builder_environment"/bin && \
+        make -j$source_packager_number_of_jobs && \
+            make -j$source_packager_number_of_jobs install; 
+    cd -;
 }
 
 gzip_stage_one() {
@@ -338,8 +338,6 @@ xz_stage_one() {
     cd "$SRCDIR";
         ./configure \
             --prefix="$source_packager_builder_environment" \
-            --build=$(build-aux/config.guess) \
-            --disable-static                  \
             --docdir="$source_packager_builder_environment"/share/doc/xz-5.2.5 && \
         make -j$source_packager_number_of_jobs && \
             make -j$source_packager_number_of_jobs install; 
@@ -364,7 +362,8 @@ dev_tools() {
     patch_stage_one;
     sed_stage_one;
     tar_stage_one;
-    xz_stage_one;
+    # xz_stage_one; : compiling this kills tar :(
 }
 
-base_shell;
+#base_shell;
+dev_tools;

@@ -1,13 +1,18 @@
 from pykgr.shell import Command, Shell
 
-#sh = Shell()
 def test_command():
     cmd = Command("hello")
     output = "Hello, world!"
-    print(cmd.run())
+
     assert cmd.run() == 'Hello, world!\n'
 
-def test_shell():
+def test_command_methods():
+    sh = Shell()
+    ls_command = sh.command("ls", "/").run()
+
+    assert ls_command == sh.ls("/").run()
+
+def test_shell_compile():
     # Compile a fresh binutils
     src_url = "http://ftp.gnu.org/gnu/binutils/binutils-2.35.tar.xz"
     sh = Shell

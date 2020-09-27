@@ -6,6 +6,16 @@ class Shell(object):
     working_dir = None
     # A pythonic shell
 
+    def __getattribute__(self, key):
+        try:
+            data = object.__getattribute__(self, key)
+            return data
+        except AttributeError as err:
+            if key in os.environ:
+                return os.environ.get('key')
+            else:
+                return Command(key)
+
     def __new__(cls, *args, **kwargs):
         # `args` are treated as arguments into a shell,
         # e.g. `Shell("ls -l")` or `Shell("ls", "-l")`
@@ -56,6 +66,11 @@ class Command:
     args = None
     env = None
     program = None
+
+    def __call__(self, *args, **kwargs):
+        self.args = args
+
+        return self
 
     def __init__(self, command, *args, **kwargs):
         self.program = command

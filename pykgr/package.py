@@ -1,2 +1,3 @@
 class Package(object):
-    pass
+    def __str__(self):
+        return "<package>"
