@@ -12,7 +12,7 @@ class Shell(object):
             return data
         except AttributeError as err:
             if key in os.environ:
-                return os.environ.get('key')
+                return os.environ.get(key)
             else:
                 return Command(key)
 
@@ -70,7 +70,7 @@ class Command:
     def __call__(self, *args, **kwargs):
         self.args = args
 
-        return self
+        return self.run()
 
     def __init__(self, command, *args, **kwargs):
         self.program = command

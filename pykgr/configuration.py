@@ -8,6 +8,7 @@ class Configuration:
         self.main_directory = getenv(self.prefix, "main_directory", "%s/pykgr" % self.root_directory)
         self.builder_directory = getenv(self.prefix, "builder_directory", "%s/builder" % self.main_directory)
         self.source_directory = getenv(self.prefix, "source_directory", "%s/source" % self.main_directory)
+        self.source_tarballs_directory = getenv(self.prefix, "source_tarballs_directory", "%s/tarballs" % self.source_directory)
         self.package_path = getenv(self.prefix, "package_path", "%s/packages" % self.main_directory)
 
     def __str__(self):
