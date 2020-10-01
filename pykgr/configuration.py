@@ -41,7 +41,8 @@ class Configuration:
             keys = self.keys()
             for k in conf:
                 if k in keys:
-                    setattr(self, k, conf[k])
+                    value = conf[k]
+                    setattr(self, k, value)
 
 def envget(key):
     return os.environ.get(key)

@@ -16,12 +16,13 @@ def initialize(conf):
     os.mkdir(conf.source_tarballs_directory)
 
 args = arguments()
-print("Using:", config)
 
 conf_file = "%s/.pykgr.json" % os.environ.get('HOME')
 if os.path.isfile(conf_file):
     config.from_file(conf_file)
 
+print("Using:", config)
+exit(-1)
 if not os.path.exists(config.source_tarballs_directory):
     if args.init:
         initialize(config)
@@ -49,3 +50,4 @@ else:
         package_class = getattr(potential_module, packages[1])
 
         pykgr_builder.build(package_class)
+        
