@@ -10,7 +10,7 @@ class Configuration:
         self.source_directory = getenv(self.prefix, "source_directory", "%s/source" % self.main_directory)
         self.source_tarballs_directory = getenv(self.prefix, "source_tarballs_directory", "%s/tarballs" % self.source_directory)
         self.package_path = getenv(self.prefix, "package_path", "%s/packages" % self.main_directory)
-        self.make_opts = getenv(self.prefix, "make_opts", "2")
+        self.make_opts = getenv(self.prefix, "make_opts", "12")
 
     def __str__(self):
         return "<pykgr.Configuration %s>" % str(self.all())

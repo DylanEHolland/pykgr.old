@@ -1,11 +1,11 @@
 import pykgr
 import os
 
-class binutils(pykgr.Package):
-    file_url = "http://ftp.gnu.org/gnu/binutils/binutils-2.35.tar.xz"
-    file_name = "binutils-2.35.tar.xz"
-    name = "binutils"
-    version = "2.35"
+class python(pykgr.Package):
+    file_url = "https://github.com/python/cpython/archive/3.7.tar.gz"
+    name = "cpython"
+    version = "3.7"
+    file_name = "3.7.tar.gz"
 
     def fetch(self):
         self.shell.cd(pykgr.config.source_tarballs_directory)

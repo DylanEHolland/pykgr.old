@@ -16,7 +16,7 @@ def initialize(conf):
     os.mkdir(conf.source_tarballs_directory)
 
 args = arguments()
-#print("Using:", config)
+print("Using:", config)
 
 if not os.path.exists(config.main_directory):
     if args.init:
