@@ -1,4 +1,5 @@
 import os
+import json
 
 class Configuration:
     prefix = "pykgr_"
@@ -17,11 +18,30 @@ class Configuration:
 
     def all(self):
         buffer = {}
-        for key in dir(self):
-            if "__" not in key and key != "prefix" and not callable(getattr(self, key)):
-                buffer[key] = getattr(self, key)
+        for key in self.keys():
+            buffer[key] = getattr(self, key)
 
         return buffer
+
+    def keys(self):
+        return [
+            key
+            for key in dir(self)
+            if "__" not in key and key != "prefix" and not callable(getattr(self, key))
+        ]
+
+    def from_file(self, json_file):
+        print("Loading Config", json_file)
+        conf = None
+        with open(json_file, 'r') as fp:
+            conf = json.loads(fp.read())
+            fp.close()
+
+        if conf:
+            keys = self.keys()
+            for k in conf:
+                if k in keys:
+                    setattr(self, k, conf[k])
 
 def envget(key):
     return os.environ.get(key)

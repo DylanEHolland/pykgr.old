@@ -43,26 +43,3 @@ class Package(object):
 
     def prepare(self):
         pass
-
-class GitRepo(object):
-    url = None
-    branch = None
-    name = None
-    def __init__(self, repo_url, branch = "master", name = None):
-        self.url = repo_url
-        self.branch = branch
-
-        if not name:
-            name = self.url.split("/")[-1]
-        self.name = name
-
-    def clone(self):
-        shell = Shell(PWD=pykgr.config.source_directory)
-        shell.git(
-            "clone", 
-            self.url, 
-            "--branch", 
-            self.branch,
-            self.name,
-            display_output = True
-        )

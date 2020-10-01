@@ -18,7 +18,11 @@ def initialize(conf):
 args = arguments()
 print("Using:", config)
 
-if not os.path.exists(config.main_directory):
+conf_file = "%s/.pykgr.json" % os.environ.get('HOME')
+if os.path.isfile(conf_file):
+    config.from_file(conf_file)
+
+if not os.path.exists(config.source_tarballs_directory):
     if args.init:
         initialize(config)
     else:
