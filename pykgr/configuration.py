@@ -1,17 +1,11 @@
 import os
 import json
 
-class Configuration:
+class Configuration(object):
     prefix = "pykgr_"
 
     def __init__(self):
-        self.root_directory = getenv(self.prefix, "root_directory", envget("HOME"))
-        self.main_directory = getenv(self.prefix, "main_directory", "%s/pykgr" % self.root_directory)
-        self.builder_directory = getenv(self.prefix, "builder_directory", "%s/builder" % self.main_directory)
-        self.source_directory = getenv(self.prefix, "source_directory", "%s/source" % self.main_directory)
-        self.source_tarballs_directory = getenv(self.prefix, "source_tarballs_directory", "%s/tarballs" % self.source_directory)
-        self.package_path = getenv(self.prefix, "package_path", "%s/packages" % self.main_directory)
-        self.make_opts = getenv(self.prefix, "make_opts", "12")
+        self.setup()
 
     def __str__(self):
         return "<pykgr.Configuration %s>" % str(self.all())
@@ -22,13 +16,6 @@ class Configuration:
             buffer[key] = getattr(self, key)
 
         return buffer
-
-    def keys(self):
-        return [
-            key
-            for key in dir(self)
-            if "__" not in key and key != "prefix" and not callable(getattr(self, key))
-        ]
 
     def from_file(self, json_file):
         print("Loading Config", json_file)
@@ -43,6 +30,27 @@ class Configuration:
                 if k in keys:
                     value = conf[k]
                     setattr(self, k, value)
+
+    def get(self, key):
+        pass
+
+    def keys(self):
+        return [
+            key
+            for key in dir(self)
+            if "__" not in key and key != "prefix" and not callable(getattr(self, key))
+        ]
+
+    def setup(self):        
+        self.root_directory = getenv(self.prefix, "root_directory", envget("HOME"))
+        self.main_directory = getenv(self.prefix, "main_directory", "%s/pykgr" % self.root_directory)
+        self.main_directory = getenv(self.prefix, "main_directory", "%s/pykgr" % self.root_directory)
+        self.builder_directory = getenv(self.prefix, "builder_directory", "%s/builder" % self.main_directory)
+        self.source_directory = getenv(self.prefix, "source_directory", "%s/source" % self.main_directory)
+        self.source_tarballs_directory = getenv(self.prefix, "source_tarballs_directory", "%s/tarballs" % self.source_directory)
+        self.package_path = getenv(self.prefix, "package_path", "%s/packages" % self.main_directory)
+        self.make_opts = getenv(self.prefix, "make_opts", "1")
+        self.local_package_module = getenv(self.prefix, "local_package_module", None)
 
 def envget(key):
     return os.environ.get(key)
