@@ -23,15 +23,7 @@ else:
     )
 
     if args.package_module:
-        python_path = os.environ.get('PYTHONPATH')
-        if not python_path:
-            python_path = ""
-
-        python_path = "%s:%s" % (args.package_module, python_path)
-        if config.local_package_module:
-            python_path = "%s:%s" % ("%s:%s" % (args.package_module, python_path), python_path)
-
-        os.environ['PYTHONPATH'] = python_path
+        cli.setup_paths(args)
 
     if args.package_file:
         package_file = args.package_file
@@ -41,4 +33,4 @@ else:
         package_class = getattr(potential_module, packages[1])
 
         pykgr_builder.build(package_class)
-        
+   

@@ -29,10 +29,9 @@ class Configuration(object):
             for k in conf:
                 if k in keys:
                     value = conf[k]
+                    if "{" in value:
+                        value = replace_vars(self, value)
                     setattr(self, k, value)
-
-    def get(self, key):
-        pass
 
     def keys(self):
         return [
@@ -67,3 +66,15 @@ def getenv(prefix, key, default_value = None):
     return value
 
 conf = Configuration()
+
+def replace_vars(instance, text):
+    for key in instance.keys():
+        string_to_find = "{%s}" % key
+        if string_to_find in text:
+            value = object.__getattribute__(instance, key)
+            text = text.replace(
+                string_to_find,
+                value
+            )
+
+    return text
