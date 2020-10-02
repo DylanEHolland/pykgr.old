@@ -51,11 +51,10 @@ class gcc(pykgr.Package):
 
         self.shell.command(
             "%s/configure" % self.code_directory,
+            "--build=x86_64-linux-gnu",
             "--prefix=%s" % pykgr.config.builder_directory,
+            "--enable-checking=release",
+            "--enable-languages=c,c++,fortran",
             "--disable-bootstrap",
-            "--disable-libstdcxx",
-            "--without-headers",
-            "--with-newlib",
-            "--disable-multilib",
-            "--enable-languages=c,c++"
+            "--disable-multilib"            
         ).run(display_output = True)
