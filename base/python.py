@@ -2,10 +2,10 @@ import pykgr
 import os
 
 class python(pykgr.Package):
-    file_url = "https://github.com/python/cpython/archive/3.9.tar.gz"
+    file_url = "https://github.com/python/cpython/archive/3.8.tar.gz"
     name = "cpython"
-    version = "3.9"
-    file_name = "3.9.tar.gz"
+    version = "3.8"
+    file_name = "3.8.tar.gz"
 
     def fetch(self):
         self.shell.cd(pykgr.config.source_tarballs_directory)
@@ -50,5 +50,5 @@ class python(pykgr.Package):
         self.shell.command(
             "%s/configure" % self.code_directory,
             "--prefix=%s" % pykgr.config.builder_directory,
-            "--enable-optimizations"
+            # "--enable-optimizations"
         ).run(display_output = True)
