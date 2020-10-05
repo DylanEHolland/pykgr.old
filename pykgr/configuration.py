@@ -65,8 +65,6 @@ def getenv(prefix, key, default_value = None):
         value = default_value
     return value
 
-conf = Configuration()
-
 def replace_vars(instance, text):
     for key in instance.keys():
         string_to_find = "{%s}" % key
@@ -78,3 +76,5 @@ def replace_vars(instance, text):
             )
 
     return text
+
+conf = Configuration()
