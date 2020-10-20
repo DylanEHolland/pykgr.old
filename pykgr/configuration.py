@@ -40,10 +40,10 @@ class Configuration(object):
             if "__" not in key and key != "prefix" and not callable(getattr(self, key))
         ]
 
-    def setup(self):        
+    def setup(self):   
         self.root_directory = getenv(self.prefix, "root_directory", envget("HOME"))
         self.main_directory = getenv(self.prefix, "main_directory", "%s/pykgr" % self.root_directory)
-        self.main_directory = getenv(self.prefix, "main_directory", "%s/pykgr" % self.root_directory)
+        
         self.builder_directory = getenv(self.prefix, "builder_directory", "%s/builder" % self.main_directory)
         self.source_directory = getenv(self.prefix, "source_directory", "%s/source" % self.main_directory)
         self.source_tarballs_directory = getenv(self.prefix, "source_tarballs_directory", "%s/tarballs" % self.source_directory)

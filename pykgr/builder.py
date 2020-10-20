@@ -1,4 +1,6 @@
 import os
+from pykgr.toolchain.binutils import binutils
+from pykgr.toolchain.gcc import gcc
 
 class Builder:
     data = None
@@ -15,6 +17,9 @@ class Builder:
     def build(self, package_class):
         package_to_build = package_class()
         package_to_build.__build__()
+
+    def build_toolchain(self):
+        self.build(binutils)
 
 class BuilderData:
     def __init__(self, **kwargs):
