@@ -20,6 +20,7 @@ class Builder:
 
     def build_toolchain(self):
         self.build(binutils)
+        self.build(gcc)
 
 class BuilderData:
     def __init__(self, **kwargs):

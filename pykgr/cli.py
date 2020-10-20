@@ -15,6 +15,15 @@ def arguments():
     
     return ap.parse_args()
 
+def import_from_string(string):
+    # e.g. example.class
+
+    packages = string.split(".")
+    potential_module = __import__(string, fromlist=[packages[1]])
+    package_class = getattr(potential_module, packages[1])
+    
+    return package_class
+
 def load_config(args):
     for conf_file in [
         "%s/.pykgr.json" % os.environ.get('HOME'),
