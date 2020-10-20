@@ -15,6 +15,6 @@ setup(
   classifiers=[
     'Development Status :: 3 - Alpha', # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable"
     'Topic :: Software Development :: Build Tools',
-    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.8',
   ],
 )
