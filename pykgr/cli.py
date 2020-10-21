@@ -16,6 +16,7 @@ def add_module(mod_path):
 def arguments():
     ap = ArgumentParser()
     
+    ap.add_argument("--build-library", action="store_true")
     ap.add_argument("--build-toolchain", action="store_true")
     ap.add_argument("--init", action="store_true")
     ap.add_argument("--package-file", "-p", help="Pass a package class to be built and installed")
@@ -75,7 +76,9 @@ def spawn_interface():
     else:
         env = Environment()
 
-    print("Using toolchain module from", config.toolchain_package_module)
+    if config.toolchain_package_module:
+        print("Using toolchain module from", config.toolchain_package_module)
+
     compiler = "%s/bin/gcc" % config.builder_directory
 
     print("Looking for environment in %s..." % config.main_directory, end=' ')
@@ -87,6 +90,6 @@ def spawn_interface():
     if args.build_toolchain:
         print("Building compiler")
         env.builder.build_toolchain()
-    else:
-        pass
-        #print()
+    
+    if args.build_library:
+        env.builder.build_library()

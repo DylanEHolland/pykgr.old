@@ -45,9 +45,11 @@ class Configuration(object):
         self.main_directory = getenv(self.prefix, "main_directory", "%s/pykgr" % self.root_directory)
         
         self.builder_directory = getenv(self.prefix, "builder_directory", "%s/builder" % self.main_directory)
+        self.library_directory = getenv(self.prefix, "library_directory", "%s/library" % self.main_directory)
+        
         self.source_directory = getenv(self.prefix, "source_directory", "%s/source" % self.main_directory)
         self.source_tarballs_directory = getenv(self.prefix, "source_tarballs_directory", "%s/tarballs" % self.source_directory)
-        
+
         self.toolchain_package_module = getenv(self.prefix, "toolchain_package_module", None)
         self.main_package_module = getenv(self.prefix, "main_package_module", "%s/packages" % self.main_directory)
         self.local_package_module = getenv(self.prefix, "local_package_module", None)

@@ -27,6 +27,10 @@ class Builder:
         self.build(binutils)
         self.build(gcc)
 
+    def build_library(self):
+        lib = cli.import_from_string("toolchain.glibc")
+        self.build(lib)
+
 class BuilderData:
     def __init__(self, **kwargs):
         self.directory = None
