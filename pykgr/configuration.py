@@ -47,10 +47,12 @@ class Configuration(object):
         self.builder_directory = getenv(self.prefix, "builder_directory", "%s/builder" % self.main_directory)
         self.source_directory = getenv(self.prefix, "source_directory", "%s/source" % self.main_directory)
         self.source_tarballs_directory = getenv(self.prefix, "source_tarballs_directory", "%s/tarballs" % self.source_directory)
-        self.package_path = getenv(self.prefix, "package_path", "%s/packages" % self.main_directory)
-        self.make_opts = getenv(self.prefix, "make_opts", "1")
+        
         self.toolchain_package_module = getenv(self.prefix, "toolchain_package_module", None)
+        self.main_package_module = getenv(self.prefix, "main_package_module", "%s/packages" % self.main_directory)
         self.local_package_module = getenv(self.prefix, "local_package_module", None)
+
+        self.make_opts = getenv(self.prefix, "make_opts", "1")
 
 def envget(key):
     return os.environ.get(key)

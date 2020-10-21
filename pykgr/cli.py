@@ -18,13 +18,13 @@ def arguments():
     
     ap.add_argument("--build-toolchain", action="store_true")
     ap.add_argument("--init", action="store_true")
-    ap.add_argument("--package_module", "-pm", action="append")
-    
-    # ap.add_argument("--package-file", "-p", help="Pass a .py file containing a pykgr class")
+    ap.add_argument("--package-file", "-p", help="Pass a package class to be built and installed")
+    ap.add_argument("--package-module", "-pm", action="append")
     
     return ap.parse_args()
 
 def import_from_string(string):
+    # Return an import module from a string
     # e.g. example.class
 
     packages = string.split(".")
@@ -34,6 +34,8 @@ def import_from_string(string):
     return package_class
 
 def load_config(args):
+    # Update config class if files are present
+
     for conf_file in [
         "%s/.pykgr.json" % os.environ.get('HOME'),
         "%s/pykgr.json" % os.environ["PWD"]
@@ -61,6 +63,8 @@ def setup_paths(args):
     print("==\n")
 
 def spawn_interface():
+    # Handle command line arguments
+
     args = arguments()
     load_config(args)
     setup_paths(args)
@@ -73,7 +77,7 @@ def spawn_interface():
 
     print("Using toolchain module from", config.toolchain_package_module)
     compiler = "%s/bin/gcc" % config.builder_directory
-    
+
     print("Looking for environment in %s..." % config.main_directory, end=' ')
     if not os.path.isfile(compiler):
         print("\nToolchain doesn't exist!")
