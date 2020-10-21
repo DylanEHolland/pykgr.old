@@ -2,15 +2,24 @@ from pykgr import config
 
 from argparse import ArgumentParser
 from pykgr.builder import Builder
-from pykgr.environment import initialize
+from pykgr.environment import Environment, initialize
 from pykgr import config
+
 import os
+import sys
+
+def add_module(mod_path):
+    mod_path = "/".join(mod_path.split("/")[0:-1])
+    if mod_path not in sys.path:
+        sys.path.insert(0, mod_path)  
 
 def arguments():
     ap = ArgumentParser()
-    ap.add_argument("--init", action="store_true")
+    
     ap.add_argument("--build-toolchain", action="store_true")
-    # ap.add_argument("--package-module", "-pm", help="Append module folder to package search path")
+    ap.add_argument("--init", action="store_true")
+    ap.add_argument("--package_module", "-pm", action="append")
+    
     # ap.add_argument("--package-file", "-p", help="Pass a .py file containing a pykgr class")
     
     return ap.parse_args()
@@ -33,15 +42,23 @@ def load_config(args):
             config.from_file(conf_file)
 
 def setup_paths(args):
-    python_path = os.environ.get('PYTHONPATH')
-    if not python_path:
-        python_path = ""
+    # Setup pythonpath so we can call local package
+    # classes.
 
-    #python_path = "%s:%s" % (args.package_module, python_path)
-    if config.local_package_module:
-        python_path = "%s:%s" % ("%s:%s" % (args.package_module, python_path), python_path)
+    if config.toolchain_package_module:
+        add_module(config.toolchain_package_module)
+        add_module(config.toolchain_package_module)
 
-    os.environ['PYTHONPATH'] = python_path
+    if args.package_module:
+        packages = args.package_module
+        for pm in packages:
+            add_module(pm)
+
+    print("\n=\nFinal $PYTHONPATH:")
+    for d in sys.path:
+        if len(d):
+            print("\t%s" % d)
+    print("==\n")
 
 def spawn_interface():
     args = arguments()
@@ -51,15 +68,21 @@ def spawn_interface():
     if args.init:
         print("Initializing")
         env = initialize()
-
-        if args.build_toolchain:
-            print("Building compiler")
-            env.builder.build_toolchain()
     else:
-        print("Looking for environment in", config.main_directory)
-        compiler = "%s/bin/gcc" % config.builder_directory
-        if not os.path.isfile(compiler):
-            print("No toolchain found! aborting")
-            exit(-1)
-        else:
-            pass
+        env = Environment()
+
+    print("Using toolchain module from", config.toolchain_package_module)
+    compiler = "%s/bin/gcc" % config.builder_directory
+    
+    print("Looking for environment in %s..." % config.main_directory, end=' ')
+    if not os.path.isfile(compiler):
+        print("\nToolchain doesn't exist!")
+    else:
+        print("Found!")
+
+    if args.build_toolchain:
+        print("Building compiler")
+        env.builder.build_toolchain()
+    else:
+        pass
+        #print()

@@ -3,8 +3,8 @@ PY_INT=python3
 all: setup
 
 clean:
-	@-for d in `find pykgr example -name __pycache__`; do rm -rv $$d; done;
-	@-for d in `find pykgr example -name *.pyc`; do rm -rv $$d; done;
+	@-for d in `find pykgr example base -name __pycache__`; do rm -rv $$d; done;
+	@-for d in `find pykgr example base -name *.pyc`; do rm -rv $$d; done;
 	@-if [ -d dist ]; then rm -r dist; fi;
 	@-if [ -f MANIFEST ]; then rm MANIFEST; fi;
 

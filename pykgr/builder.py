@@ -1,6 +1,7 @@
 import os
-from pykgr.toolchain.binutils import binutils
-from pykgr.toolchain.gcc import gcc
+from . import cli
+# from pykgr.toolchain.binutils import binutils
+# from pykgr.toolchain.gcc import gcc
 
 class Builder:
     data = None
@@ -16,9 +17,13 @@ class Builder:
 
     def build(self, package_class):
         package_to_build = package_class()
+        #print(package_to_build)
         package_to_build.__build__()
 
-    def build_toolchain(self):
+    def build_toolchain(self):        
+        binutils = cli.import_from_string("toolchain.binutils")
+        gcc = cli.import_from_string("toolchain.gcc")
+
         self.build(binutils)
         self.build(gcc)
 
@@ -30,3 +35,7 @@ class BuilderData:
         for key in kwargs:
             if key in self_keys:
                 setattr(self, key, kwargs.get(key))
+
+class BuilderLibrary:
+    # For maintaining a local glibc
+    pass

@@ -43,3 +43,6 @@ class Package(object):
 
     def prepare(self):
         pass
+
+class PackageList(object):
+    pass
