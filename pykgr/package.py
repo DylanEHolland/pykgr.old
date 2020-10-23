@@ -9,10 +9,11 @@ class Package(object):
     version = None
 
     def __build__(self):
+        print("Building", self)
         self.fetch()
-        self.prepare()
-        self.make()
-        self.install()
+        # self.prepare()
+        # self.make()
+        # self.install()
 
     def __init__(self, **kwargs):
         self.shell = Shell(PWD=pykgr.config.source_directory)
@@ -32,6 +33,9 @@ class Package(object):
     def __str__(self):
         return "<package [%s-%s]>" % (self.name, str(self.version))
 
+    def configure(self):
+        pass
+
     def fetch(self):
         pass
 
@@ -42,7 +46,12 @@ class Package(object):
         pass
 
     def prepare(self):
-        pass
+        self.shell.cd(self.code_directory)
+        if not os.path.exists(self.build_directory):
+            os.mkdir(self.build_directory)
+        self.shell.cd(self.build_directory)
+
+        self.configure()
 
 class PackageList(object):
     pass

@@ -16,8 +16,10 @@ class Builder:
             os.mkdir(self.data.directory)
 
     def build(self, package_class):
+        if type(package_class) == str:
+            package_class = cli.import_from_string(package_class)
+
         package_to_build = package_class()
-        #print(package_to_build)
         package_to_build.__build__()
 
     def build_toolchain(self):        

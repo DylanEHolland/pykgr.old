@@ -19,7 +19,7 @@ def arguments():
     ap.add_argument("--build-library", action="store_true")
     ap.add_argument("--build-toolchain", action="store_true")
     ap.add_argument("--init", action="store_true")
-    ap.add_argument("--package-file", "-p", help="Pass a package class to be built and installed")
+    ap.add_argument("--package-file","-p", help="Pass a package class to be built and installed")
     ap.add_argument("--package-module", "-pm", action="append")
     
     return ap.parse_args()
@@ -93,3 +93,7 @@ def spawn_interface():
     
     if args.build_library:
         env.builder.build_library()
+
+    if args.package_file:
+        print("Building", args.package_file)
+        env.build_package(args.package_file)
