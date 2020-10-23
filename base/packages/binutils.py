@@ -44,6 +44,6 @@ class binutils(pykgr.Package):
     def configure(self):
         self.shell.command(
             "%s/configure" % self.code_directory,
-            "--prefix=/tmp/binutils", #%s" % pykgr.config.builder_directory,
-            #"--with-lib-path=%s/lib" % pykgr.config.library_directory
+            "--prefix=%s" % pykgr.config.builder_directory,
+            "--with-lib-path=%s/lib" % pykgr.config.library_directory
         ).run(display_output = True)
