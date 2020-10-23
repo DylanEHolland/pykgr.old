@@ -46,6 +46,7 @@ class Configuration(object):
         
         self.builder_directory = getenv(self.prefix, "builder_directory", "%s/builder" % self.main_directory)
         self.library_directory = getenv(self.prefix, "library_directory", "%s/library" % self.main_directory)
+        self.packages_directory = getenv(self.prefix, "packages_directory", "%s/packages" % self.main_directory)
         
         self.source_directory = getenv(self.prefix, "source_directory", "%s/source" % self.main_directory)
         self.source_tarballs_directory = getenv(self.prefix, "source_tarballs_directory", "%s/tarballs" % self.source_directory)

@@ -90,8 +90,12 @@ def spawn_interface():
     if args.build_toolchain:
         print("Building compiler")
         env.builder.build_toolchain()
+        if not os.path.exists("%s/lib" % config.library_directory):
+            print("Building glibc")
+            env.builder.build_library()
     
     if args.build_library:
+        print("Building glibc")
         env.builder.build_library()
 
     if args.package_file:

@@ -7,38 +7,6 @@ class gcc(pykgr.Package):
     name = "gcc"
     version = "10.2.0"
 
-    def fetch(self):
-        self.shell.cd(pykgr.config.source_tarballs_directory)
-
-        self.shell.command(
-            "wget",
-            "-c",
-            self.file_url
-        ).run(
-            display_output = True
-        )
-
-        if not os.path.exists(self.code_directory):
-            self.shell.tar(
-                "xvf",
-                self.file_name,
-                "-C",
-                pykgr.config.source_directory,
-                display_output = True
-            )
-
-    def install(self):
-        self.shell.cd(self.build_directory)
-        self.shell.make(
-            "-j%s" % pykgr.config.make_opts,
-            "install",
-            display_output = True
-        )
-
-    def make(self):
-        self.shell.cd(self.build_directory)
-        self.shell.make("-j%s" % pykgr.config.make_opts, display_output = True)
-
     def prepare(self):
         # Overloads prepare instead of configure to download prequisites
         

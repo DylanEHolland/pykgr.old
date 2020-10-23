@@ -54,13 +54,13 @@ class Shell(object):
         os.chdir(directory)
         os.environ["PWD"] = directory
 
-    def command(self, *args):
+    def command(self, *args, **kwargs):
         cmd = args[0]
         arguments = []
         if len(args) >= 2:
             arguments = args[1:]
 
-        return Command(cmd, *arguments)
+        return Command(cmd, *arguments, **kwargs)
 
 class Command:
     args = None
