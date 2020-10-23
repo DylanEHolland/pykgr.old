@@ -41,13 +41,9 @@ class binutils(pykgr.Package):
         self.shell.cd(self.build_directory)
         self.shell.make("-j%s" % pykgr.config.make_opts, display_output = True)
         
-    def prepare(self):
-        self.shell.cd(self.code_directory)
-        if not os.path.exists(self.build_directory):
-            os.mkdir(self.build_directory)
-        self.shell.cd(self.build_directory)
-
+    def configure(self):
         self.shell.command(
             "%s/configure" % self.code_directory,
-            "--prefix=%s" % pykgr.config.builder_directory
+            "--prefix=/tmp/binutils", #%s" % pykgr.config.builder_directory,
+            #"--with-lib-path=%s/lib" % pykgr.config.library_directory
         ).run(display_output = True)

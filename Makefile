@@ -20,3 +20,15 @@ push:
 setup:
 	@-if ! [ -d env ]; then $(PY_INT) -m venv env; fi;
 	@-source env/bin/activate && pip install -r requirements.txt;
+
+view_links: view_ld_list view_c_list view_cpp_list
+	@-echo done;
+
+view_ld_list:
+	ld --verbose | grep SEARCH_DIR | tr -s ' ;' \\012;
+
+view_c_list:
+	echo | gcc -x c -E -Wp,-v - >/dev/null;
+
+view_cpp_list:
+	gcc -x c++ -E -Wp,-v - >/dev/null;

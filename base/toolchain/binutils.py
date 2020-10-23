@@ -3,8 +3,11 @@ import os
 from base.packages.binutils import binutils as binutils_main
 
 class binutils(binutils_main):
-    def prepare(self):
-        
+    def configure(self):
+        self.shell.command(
+            "%s/configure" % self.code_directory,
+            "--prefix=%s" % pykgr.config.builder_directory
+        ).run(display_output = True)
 
 
 # class binutils(pykgr.Package):

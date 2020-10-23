@@ -1,5 +1,6 @@
 from pykgr.shell import Shell
 import pykgr
+import os
 
 class Package(object):
     build_directory = None
@@ -11,9 +12,9 @@ class Package(object):
     def __build__(self):
         print("Building", self)
         self.fetch()
-        # self.prepare()
-        # self.make()
-        # self.install()
+        self.prepare()
+        self.make()
+        self.install()
 
     def __init__(self, **kwargs):
         self.shell = Shell(PWD=pykgr.config.source_directory)
