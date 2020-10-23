@@ -6,15 +6,17 @@ class Package(object):
     build_directory = None
     code_directory = None
     name = None
+    repo = False
+    repo_url = None
     shell = None
     version = None
 
     def __build__(self):
         print("Building", self)
-        self.fetch()
+        # self.fetch()
         self.prepare()
-        self.make()
-        self.install()
+        # self.make()
+        # self.install()
 
     def __init__(self, **kwargs):
         self.shell = Shell(PWD=pykgr.config.source_directory)
@@ -48,8 +50,10 @@ class Package(object):
 
     def prepare(self):
         self.shell.cd(self.code_directory)
-        if not os.path.exists(self.build_directory):
-            os.mkdir(self.build_directory)
+        if os.path.exists(self.build_directory):
+            os.rmdir(self.build_directory)
+        
+        os.mkdir(self.build_directory)
         self.shell.cd(self.build_directory)
 
         self.configure()

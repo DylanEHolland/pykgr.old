@@ -10,9 +10,9 @@ class binutils(pykgr.Package):
     def fetch(self):
         self.shell.cd(pykgr.config.source_tarballs_directory)
         if os.path.exists(self.code_directory):
-            print("Already exists")
-            return
-
+            print("Already exists, removing...")
+            os.rmdir(self.code_directory)
+            
         self.shell.command(
             "wget", 
             "-c",
