@@ -2,6 +2,7 @@ from pykgr.shell import Shell
 import pykgr
 import os
 
+
 class Package(object):
     # This class contains the methods needed to compile most
     # gnu and open source projects.
@@ -47,7 +48,7 @@ class Package(object):
     def configure(self):
         self.shell.command(
             "%s/configure" % self.code_directory,
-            "--prefix=%s" % self. 
+            "--prefix=%s" % self.base_directory
         ).run(display_output = True)
 
     def decompress(self):
