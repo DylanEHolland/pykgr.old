@@ -1,5 +1,6 @@
 import os
 
+
 class Builder:
     data = None
 
@@ -15,6 +16,7 @@ class Builder:
     def build(self, package_class):
         package_to_build = package_class()
         package_to_build.__build__()
+
 
 class BuilderData:
     def __init__(self, **kwargs):

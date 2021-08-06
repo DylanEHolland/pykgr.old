@@ -29,6 +29,7 @@ binutils_stage_one() {
     rm -rf "$BLDDIR";
 }
 
+
 gcc_stage_one() {
     GLIBC_LIMITS_H="https://raw.githubusercontent.com/lattera/glibc/master/include/limits.h";
     FILEURL="http://ftp.gnu.org/gnu/gcc/gcc-10.2.0/gcc-10.2.0.tar.xz";
@@ -82,6 +83,7 @@ gcc_stage_one() {
     rm -rf "$BLDDIR";
 }
 
+
 get_kernel_headers() {
     LINUX_VERSION=$(uname -r | cut -c 1-3)
     FILEURL="https://github.com/torvalds/linux/archive/v$LINUX_VERSION.tar.gz"
@@ -103,6 +105,7 @@ get_kernel_headers() {
     cd -;
     rm -rf "$BLDDIR";
 }
+
 
 glibc_stage_one() {
     BRANCH="release/2.32/master";
@@ -141,6 +144,7 @@ glibc_stage_one() {
     cd -;
     "$source_packager_builder_environment"/libexec/gcc/"$source_packager_target"/10.2.0/install-tools/mkheaders
 }
+
 
 lib_cpp_stage_one() {
     GCC_NAME="gcc-10.2.0";

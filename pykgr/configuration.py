@@ -1,6 +1,7 @@
 import os
 import json
 
+
 class Configuration(object):
     prefix = "pykgr_"
 
@@ -51,8 +52,10 @@ class Configuration(object):
         self.make_opts = getenv(self.prefix, "make_opts", "1")
         self.local_package_module = getenv(self.prefix, "local_package_module", None)
 
+
 def envget(key):
     return os.environ.get(key)
+
 
 def getenv(prefix, key, default_value = None):
     key_name = "%s%s" % (
@@ -65,6 +68,7 @@ def getenv(prefix, key, default_value = None):
         value = default_value
     return value
 
+
 def replace_vars(instance, text):
     for key in instance.keys():
         string_to_find = "{%s}" % key
@@ -76,5 +80,6 @@ def replace_vars(instance, text):
             )
 
     return text
+
 
 conf = Configuration()

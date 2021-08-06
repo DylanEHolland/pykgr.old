@@ -2,7 +2,7 @@ __pycache__
 *.pyc
 a.out
 wget-lost
-env
+venv
 .vscode
 MANIFEST
 dist

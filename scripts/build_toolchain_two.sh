@@ -129,7 +129,7 @@ lib_cpp_stage_two() {
 
 # Build intermediate compiler
 
-binutils_stage_two;
-# gcc_stage_two;
+# binutils_stage_two;
+gcc_stage_two;
 # glibc_stage_two;
 # lib_cpp_stage_two;

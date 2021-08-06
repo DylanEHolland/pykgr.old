@@ -6,6 +6,7 @@ from pykgr.environment import initialize
 from pykgr import config
 import os
 
+
 def arguments():
     ap = ArgumentParser()
     ap.add_argument("--init", action="store_true")
@@ -14,6 +15,7 @@ def arguments():
     
     return ap.parse_args()
 
+
 def load_config(args):
     for conf_file in [
         "%s/.pykgr.json" % os.environ.get('HOME'),
@@ -21,6 +23,7 @@ def load_config(args):
     ]:
         if os.path.isfile(conf_file):
             config.from_file(conf_file)
+
 
 def setup_paths(args):
     python_path = os.environ.get('PYTHONPATH')
@@ -32,6 +35,7 @@ def setup_paths(args):
         python_path = "%s:%s" % ("%s:%s" % (args.package_module, python_path), python_path)
 
     os.environ['PYTHONPATH'] = python_path
+
 
 def spawn_interface():
     args = arguments()

@@ -1,6 +1,7 @@
 from pykgr.shell import Shell
 import pykgr
 
+
 class Package(object):
     build_directory = None
     code_directory = None

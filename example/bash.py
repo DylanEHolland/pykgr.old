@@ -1,6 +1,7 @@
 import pykgr
 import os
 
+
 class bash(pykgr.Package):
     file_url = "http://ftp.gnu.org/gnu/bash/bash-5.0.tar.gz"
     file_name = "bash-5.0.tar.gz"
