@@ -3,6 +3,7 @@ from . import cli
 # from pykgr.toolchain.binutils import binutils
 # from pykgr.toolchain.gcc import gcc
 
+
 class Builder:
     data = None
 
@@ -33,6 +34,7 @@ class Builder:
         lib = cli.import_from_string("toolchain.glibc")
         self.build(lib)
 
+
 class BuilderData:
     def __init__(self, **kwargs):
         self.directory = None
@@ -41,6 +43,7 @@ class BuilderData:
         for key in kwargs:
             if key in self_keys:
                 setattr(self, key, kwargs.get(key))
+
 
 class BuilderLibrary:
     # For maintaining a local glibc

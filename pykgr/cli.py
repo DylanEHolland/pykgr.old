@@ -8,10 +8,12 @@ from pykgr import config
 import os
 import sys
 
+
 def add_module(mod_path):
     mod_path = "/".join(mod_path.split("/")[0:-1])
     if mod_path not in sys.path:
         sys.path.insert(0, mod_path)  
+
 
 def arguments():
     ap = ArgumentParser()
@@ -19,20 +21,23 @@ def arguments():
     ap.add_argument("--build-library", action="store_true")
     ap.add_argument("--build-toolchain", action="store_true")
     ap.add_argument("--init", action="store_true")
-    ap.add_argument("--package-file","-p", help="Pass a package class to be built and installed")
+    ap.add_argument("--package-file", "-p", help="Pass a package class to be built and installed")
     ap.add_argument("--package-module", "-pm", action="append")
     
     return ap.parse_args()
+
 
 def import_from_string(string):
     # Return an import module from a string
     # e.g. example.class
 
     packages = string.split(".")
+    print(packages)
     potential_module = __import__(string, fromlist=[packages[1]])
     package_class = getattr(potential_module, packages[1])
     
     return package_class
+
 
 def load_config(args):
     # Update config class if files are present
@@ -43,6 +48,7 @@ def load_config(args):
     ]:
         if os.path.isfile(conf_file):
             config.from_file(conf_file)
+
 
 def setup_paths(args):
     # Setup pythonpath so we can call local package
@@ -62,6 +68,7 @@ def setup_paths(args):
         if len(d):
             print("\t%s" % d)
     print("==\n")
+
 
 def spawn_interface():
     # Handle command line arguments

@@ -1,5 +1,5 @@
 {
     "make_opts": "12",
-    "toolchain_package_module": "/home/dylan/Documents/Code/Active/pykgr/base/toolchain",
-    "main_package_module": "/home/dylan/Documents/Code/Active/pykgr/base"
+    "toolchain_package_module": "/home/dylan/Documents/pykgr/base/toolchain",
+    "main_package_module": "/home/dylan/Documents/pykgr/base"
 }

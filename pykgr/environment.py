@@ -3,6 +3,7 @@ from pykgr.builder import Builder
 
 import os
 
+
 class Environment(object):
     builder = None
     variables = None
@@ -22,6 +23,7 @@ class Environment(object):
     def __str__(self):
         return "<Environment: %s>" % id(self)
 
+
 def build_directories():
     for d in [
         config.main_directory, 
@@ -31,6 +33,7 @@ def build_directories():
     ]:
         if not os.path.exists(d):
             os.mkdir(d)
+
 
 def initialize():
     build_directories()

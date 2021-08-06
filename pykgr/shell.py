@@ -2,6 +2,7 @@ import os
 import subprocess
 import sys
 
+
 class Shell(object):
     working_dir = None
     # A pythonic shell
@@ -61,6 +62,7 @@ class Shell(object):
             arguments = args[1:]
 
         return Command(cmd, *arguments, **kwargs)
+
 
 class Command:
     args = None
