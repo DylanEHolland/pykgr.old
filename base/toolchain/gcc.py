@@ -2,7 +2,8 @@ import pykgr
 import os
 from base.packages.gcc import gcc as gcc_old
 
-class gcc(gcc_old):
+
+class Gcc(gcc_old):
     def prepare(self):
         # Overloads prepare instead of configure to download prequisites
         

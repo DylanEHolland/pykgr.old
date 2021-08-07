@@ -61,6 +61,7 @@ class Shell(object):
         if len(args) >= 2:
             arguments = args[1:]
 
+        print(cmd, arguments)
         return Command(cmd, *arguments, **kwargs)
 
 

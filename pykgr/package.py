@@ -1,6 +1,7 @@
 from pykgr.shell import Shell
 import pykgr
 import os
+import shutil
 
 
 class Package(object):
@@ -13,6 +14,7 @@ class Package(object):
 
     build_directory = None
     code_directory = None
+    compile_directory = None # e.g. if code_directory has a subdir, so "{code_directory}/src" for vim
     subdirectory_location = None
     file_name = None
     file_url = None
@@ -21,6 +23,8 @@ class Package(object):
     repo_url = None
     shell = None
     version = None
+
+    no_build_dir = False
 
     def __build__(self):
         print("Building", self)
@@ -37,6 +41,11 @@ class Package(object):
                 self.version
             )
         )
+
+        self.working_directory = self.code_directory
+        if self.compile_directory:
+            self.working_directory = self.working_directory + self.compile_directory
+
         self.build_directory = "%s/build" % self.code_directory
         self.__initialize__()
 
@@ -48,7 +57,7 @@ class Package(object):
 
     def configure(self):
         self.shell.command(
-            "%s/configure" % self.code_directory,
+            "%s/configure" % self.working_directory,
             "--prefix=%s" % pykgr.config.packages_directory
         ).run(display_output = True)
 
@@ -80,7 +89,11 @@ class Package(object):
             self.decompress()
 
     def install(self):
-        self.shell.cd(self.build_directory)
+        if self.no_build_dir:
+            self.shell.cd(self.working_directory)
+        else:
+            self.shell.cd(self.build_directory)
+
         self.shell.make(
             "-j%s" % pykgr.config.make_opts,
             "install",
@@ -88,23 +101,35 @@ class Package(object):
         )
 
     def make(self):
-        self.shell.cd(self.build_directory)
+        if self.no_build_dir:
+            self.shell.cd(self.working_directory)
+        else:
+            self.shell.cd(self.build_directory)
+
         self.shell.make("-j%s" % pykgr.config.make_opts, display_output = True)
 
     def prepare(self):
-        self.shell.cd(self.code_directory)
-        if os.path.exists(self.build_directory):
-            os.rmdir(self.build_directory)
-        
-        os.mkdir(self.build_directory)
-        self.shell.cd(self.build_directory)
+        self.shell.cd(self.working_directory)
 
+        if not self.no_build_dir:
+            if os.path.exists(self.build_directory):
+                shutil.rmtree(self.build_directory)
+
+            if not os.path.exists(self.build_directory):
+                os.mkdir(self.build_directory)
+            self.shell.cd(self.build_directory)
+
+        self.pre_configure_run()
         self.configure()
+
+    def pre_configure_run(self):
+        # Should be overwritten
+        pass
 
     def untar(self):
         self.shell.tar(
             "xvf",
-            self.file_name,
+            pykgr.config.source_directory + "/tarballs/" + self.file_name,
             "-C",
             pykgr.config.source_directory,
             display_output = True
