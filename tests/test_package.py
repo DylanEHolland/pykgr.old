@@ -23,7 +23,7 @@ class Vim(pykgr.Package):
         self.shell.make("distclean", display_output=True)
 
 
-def test_build():
+def test_build_packages():
     env = pykgr.Environment()
 
     env.build_package(Hello)
@@ -34,4 +34,4 @@ def test_build():
 
 
 if __name__ == "__main__":
-    test_build()
+    test_build_packages()
