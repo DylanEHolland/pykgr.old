@@ -1,5 +1,4 @@
-from pykgr import config
-
+from pykgr.subroutines import load_config
 from argparse import ArgumentParser
 from pykgr.environment import Environment, initialize
 from pykgr import config
@@ -24,17 +23,6 @@ def arguments():
     ap.add_argument("--package-module", "-pm", action="append")
     
     return ap.parse_args()
-
-
-def load_config(args):
-    # Update config class if files are present
-
-    for conf_file in [
-        "%s/.pykgr.json" % os.environ.get('HOME'),
-        "%s/pykgr.json" % os.environ["PWD"]
-    ]:
-        if os.path.isfile(conf_file):
-            config.from_file(conf_file)
 
 
 def setup_paths(args):

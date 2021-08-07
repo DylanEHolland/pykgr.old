@@ -2,6 +2,7 @@ import os
 from pykgr import config
 from pykgr.builder import Builder
 
+
 class Environment(object):
     builder = None
     variables = None

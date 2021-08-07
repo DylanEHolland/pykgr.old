@@ -1,7 +1,5 @@
 import os
 from pykgr.subroutines import import_from_string
-# from pykgr.toolchain.binutils import binutils
-# from pykgr.toolchain.gcc import gcc
 
 
 class Builder(object):

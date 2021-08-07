@@ -14,11 +14,11 @@ class Hello(pykgr.Package):
     version = "2.9"
 
 
-class Bash(pykgr.Package):
-    file_url = "http://ftp.gnu.org/gnu/bash/bash-5.0.tar.gz"
-    file_name = "bash-5.0.tar.gz"
-    name = "bash"
-    version = "5.0"
+class Vim(pykgr.Package):
+    file_url = "https://github.com/vim/vim/archive/refs/tags/v8.2.3301.tar.gz"
+    file_name = "v8.2.3301.tar.gz"
+    name = "vim"
+    version = "8.2.3301"
 
 
 def test_setup():
@@ -33,10 +33,10 @@ def test_build():
     env.build_package(Hello)
     assert os.path.exists(pykgr.config.packages_directory+"/bin/hello") is True
 
-    env.build_package(Bash)
-    assert os.path.exists(pykgr.config.packages_directory+"/bin/bash") is True
+    env.build_package(Vim)
+    assert os.path.exists(pykgr.config.packages_directory+"/bin/vi") is True
 
 
 if __name__ == "__main__":
     test_setup()
-    #test_build()
+    test_build()
