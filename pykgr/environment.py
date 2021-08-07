@@ -1,7 +1,6 @@
+import os
 from pykgr import config
 from pykgr.builder import Builder
-import os
-
 
 class Environment(object):
     builder = None
@@ -10,7 +9,7 @@ class Environment(object):
     def __init__(self):
         self.variables = dict(os.environ)
         self.builder = Builder(
-            directory = config.builder_directory
+            directory=config.builder_directory
         )
 
     def build_builder(self):
@@ -24,12 +23,15 @@ class Environment(object):
 
 
 def build_directories():
+    if not os.path.exists(config.root_directory):
+        os.mkdir(config.root_directory)
     for d in [
-        config.main_directory, 
-        config.source_directory, 
+        config.main_directory,
+        config.source_directory,
         config.source_tarballs_directory,
         config.library_directory
     ]:
+        print(d)
         if not os.path.exists(d):
             os.mkdir(d)
 
