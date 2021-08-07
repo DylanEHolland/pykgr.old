@@ -2,7 +2,7 @@ import pykgr
 import os
 
 
-class test_package(pykgr.Package):
+class DontRunTestPackage(pykgr.Package):
     file_url = "https://ftp.gnu.org/gnu/hello/hello-2.9.tar.gz"
     file_name = "hello-2.9.tar.gz"
     name = "hello"
@@ -11,7 +11,7 @@ class test_package(pykgr.Package):
 
 def test_build():
     env = pykgr.Environment()
-    env.build_package(test_package)
+    env.build_package(DontRunTestPackage)
 
 
 if __name__ == "__main__":

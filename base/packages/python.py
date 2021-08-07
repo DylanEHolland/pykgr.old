@@ -4,8 +4,8 @@ import os
 class python(pykgr.Package):
     file_url = "https://github.com/python/cpython/archive/3.9.tar.gz"
     name = "cpython"
-    version = "3.8"
-    file_name = "3.8.tar.gz"
+    version = "3.9"
+    file_name = "3.9.tar.gz"
 
     def fetch(self):
         self.shell.cd(pykgr.config.source_tarballs_directory)
@@ -28,18 +28,6 @@ class python(pykgr.Package):
             pykgr.config.source_directory,
             display_output = True
         )
-
-    def install(self):
-        self.shell.cd(self.build_directory)
-        self.shell.make(
-            "-j%s" % pykgr.config.make_opts,
-            "install",
-            display_output = True
-        )
-
-    def make(self):
-        self.shell.cd(self.build_directory)
-        self.shell.make("-j%s" % pykgr.config.make_opts, display_output = True)
         
     def prepare(self):
         self.shell.cd(self.code_directory)
@@ -49,6 +37,6 @@ class python(pykgr.Package):
 
         self.shell.command(
             "%s/configure" % self.code_directory,
-            "--prefix=%s" % pykgr.config.builder_directory,
+            "--prefix=%s" % pykgr.config.packages_directory,
             "--enable-optimizations"
         ).run(display_output = True)

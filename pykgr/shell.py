@@ -82,7 +82,7 @@ class Command:
     def run(self, display_output = False):
         command_line = [
             self.program
-        ] + list(self.args)
+        ] + [e for e in self.args]
 
         process = subprocess.Popen(
             command_line,
@@ -92,7 +92,7 @@ class Command:
 
         if display_output:
             for line in iter(process.stdout.readline, b''):
-                sys.stdout.write(line.decode())
+                sys.stdout.write(line.decode("utf-8", "strict") )
 
         output, error = process.communicate()
         if type(output) == bytes:
