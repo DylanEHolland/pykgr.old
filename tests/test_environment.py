@@ -19,6 +19,28 @@ class Vim(pykgr.Package):
     file_name = "v8.2.3301.tar.gz"
     name = "vim"
     version = "8.2.3301"
+    sub_directory_location = "/src"
+
+    def __initialize__(self):
+        self.code_directory = self.code_directory + "/src"#self.sub_directory_location
+        self.build_directory = self.code_directory
+
+    def configure(self):
+        # Vim doesn't use autoconf
+        self.shell.cd(self.code_directory)
+        self.shell.make("distclean", display_output=True)
+        self.shell.configure("--prefix="+pykgr.config.packages_directory)
+
+    def install(self):
+        self.shell.make(
+            "-j%s" % pykgr.config.make_opts,
+            "DESTDIR="+pykgr.config.packages_directory,
+            "install",
+            display_output=True
+        )
+
+    def prepare(self):
+        pass
 
 
 def test_setup():

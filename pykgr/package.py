@@ -13,6 +13,7 @@ class Package(object):
 
     build_directory = None
     code_directory = None
+    subdirectory_location = None
     file_name = None
     file_url = None
     name = None
