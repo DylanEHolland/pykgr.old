@@ -1,6 +1,5 @@
 from pykgr import config
 from pykgr.builder import Builder
-
 import os
 
 

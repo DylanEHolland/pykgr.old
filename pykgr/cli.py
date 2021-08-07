@@ -1,7 +1,6 @@
 from pykgr import config
 
 from argparse import ArgumentParser
-from pykgr.builder import Builder
 from pykgr.environment import Environment, initialize
 from pykgr import config
 
@@ -25,18 +24,6 @@ def arguments():
     ap.add_argument("--package-module", "-pm", action="append")
     
     return ap.parse_args()
-
-
-def import_from_string(string):
-    # Return an import module from a string
-    # e.g. example.class
-
-    packages = string.split(".")
-    print(packages)
-    potential_module = __import__(string, fromlist=[packages[1]])
-    package_class = getattr(potential_module, packages[1])
-    
-    return package_class
 
 
 def load_config(args):

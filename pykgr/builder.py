@@ -1,10 +1,10 @@
 import os
-from . import cli
+from pykgr.subroutines import import_from_string
 # from pykgr.toolchain.binutils import binutils
 # from pykgr.toolchain.gcc import gcc
 
 
-class Builder:
+class Builder(object):
     data = None
 
     def __init__(self, **kwargs):
@@ -18,20 +18,20 @@ class Builder:
 
     def build(self, package_class):
         if type(package_class) == str:
-            package_class = cli.import_from_string(package_class)
+            package_class = import_from_string(package_class)
 
         package_to_build = package_class()
         package_to_build.__build__()
 
     def build_toolchain(self):        
-        binutils = cli.import_from_string("toolchain.binutils")
-        gcc = cli.import_from_string("toolchain.gcc")
+        binutils = import_from_string("toolchain.binutils")
+        gcc = import_from_string("toolchain.gcc")
 
         self.build(binutils)
         self.build(gcc)
 
     def build_library(self):
-        lib = cli.import_from_string("toolchain.glibc")
+        lib = import_from_string("toolchain.glibc")
         self.build(lib)
 
 
