@@ -48,11 +48,10 @@ class Package(object):
     def configure(self):
         self.shell.command(
             "%s/configure" % self.code_directory,
-            "--prefix=%s" % self.base_directory
+            "--prefix=%s" % pykgr.config.packages_directory
         ).run(display_output = True)
 
     def decompress(self):
-        print(self.code_directory)
         if os.path.exists(self.code_directory):
             print("Decompressed code exists, removing...")
             self.shell.command("rm", "-rfv", self.code_directory).run(display_output = True)
