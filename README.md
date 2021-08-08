@@ -14,12 +14,12 @@ directory
 
     . mypackages
         . tools
-            . vim.py
+            . hello.py
             . python.py
 
 would allow you to install vim like so
 
-`python -m pykgr --package-module /path/to/mypackages -p tools.vim`
+`python -m pykgr --init --build-toolchain -p mypackages.tools.hello.Hello`
 
 It can also be used in code, like this
 

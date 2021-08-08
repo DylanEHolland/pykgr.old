@@ -2,7 +2,7 @@ import pykgr
 import os
 
 
-class python(pykgr.Package):
+class Python(pykgr.Package):
     file_url = "https://github.com/python/cpython/archive/3.9.tar.gz"
     name = "cpython"
     version = "3.9"
