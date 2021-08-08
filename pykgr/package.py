@@ -74,7 +74,7 @@ class Package(object):
         self.shell.command(
             "wget", 
             "-c",
-            self.file_url
+            self.file_url.encode()
         ).run(
             display_output = True
         )

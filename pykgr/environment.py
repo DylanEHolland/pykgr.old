@@ -32,7 +32,6 @@ def build_directories():
         config.source_tarballs_directory,
         config.library_directory
     ]:
-        print(d)
         if not os.path.exists(d):
             os.mkdir(d)
 
