@@ -1,6 +1,5 @@
 import pykgr
 from pykgr.subroutines import add_module, import_from_string, setup_paths
-import os
 import sys
 from common import get_current_path
 pykgr.config.setup("/tmp/pykgr_test")

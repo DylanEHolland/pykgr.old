@@ -16,5 +16,10 @@ class Gcc(pykgr.Package):
             "--enable-checking=release",
             "--enable-languages=c,c++,fortran",
             "--disable-bootstrap",
-            "--disable-multilib"            
+            "--disable-multilib"
         ).run(display_output = True)
+
+    def pre_configure_run(self):
+        self.shell.cd(self.working_directory)
+        self.shell.command("contrib/download_prerequisites").run(display_output=True)
+        self.shell.cd(self.build_directory)
