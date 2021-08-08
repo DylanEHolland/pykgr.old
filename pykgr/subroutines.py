@@ -1,4 +1,12 @@
 from pykgr import config
+import sys
+import os
+
+
+def add_module(mod_path):
+    # mod_path = "/".join(mod_path.split("/")[:-1])
+    if mod_path not in sys.path:
+        sys.path.insert(0, mod_path)
 
 
 def import_from_string(string):
@@ -6,11 +14,16 @@ def import_from_string(string):
     # e.g. example.class
 
     packages = string.split(".")
-    print(packages)
-    potential_module = __import__(string, fromlist=[packages[1]])
-    package_class = getattr(potential_module, packages[1])
+    print(packages, packages[0:-1], packages[-1])
+    if len(packages):
+        main_package = ".".join(packages[0:-1])
+        main_class = packages[-1]
+        print(main_class)
+        #potential_module = __import__(packages[0], fromlist=[packages[1]])
+        potential_module = __import__(main_package, fromlist=[main_class])
+        package_class = getattr(potential_module, main_class)
 
-    return package_class
+        return package_class
 
 
 def load_config(args):
@@ -22,3 +35,22 @@ def load_config(args):
     ]:
         if os.path.isfile(conf_file):
             config.from_file(conf_file)
+
+
+def setup_paths(args):
+    # Setup pythonpath so we can call local package
+    # classes.
+
+    if config.toolchain_package_module:
+        add_module(config.toolchain_package_module)
+
+    if args.package_module:
+        packages = args.package_module
+        for pm in packages:
+            add_module(pm)
+
+    print("\n=\nFinal $PYTHONPATH:")
+    for d in sys.path:
+        if len(d):
+            print("\t%s" % d)
+    print("==\n")

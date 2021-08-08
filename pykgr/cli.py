@@ -1,16 +1,8 @@
-from pykgr.subroutines import load_config
+from pykgr.subroutines import load_config, setup_paths
 from argparse import ArgumentParser
 from pykgr.environment import Environment, initialize
 from pykgr import config
-
 import os
-import sys
-
-
-def add_module(mod_path):
-    mod_path = "/".join(mod_path.split("/")[0:-1])
-    if mod_path not in sys.path:
-        sys.path.insert(0, mod_path)  
 
 
 def arguments():
@@ -23,26 +15,6 @@ def arguments():
     ap.add_argument("--package-module", "-pm", action="append")
     
     return ap.parse_args()
-
-
-def setup_paths(args):
-    # Setup pythonpath so we can call local package
-    # classes.
-
-    if config.toolchain_package_module:
-        add_module(config.toolchain_package_module)
-        add_module(config.toolchain_package_module)
-
-    if args.package_module:
-        packages = args.package_module
-        for pm in packages:
-            add_module(pm)
-
-    print("\n=\nFinal $PYTHONPATH:")
-    for d in sys.path:
-        if len(d):
-            print("\t%s" % d)
-    print("==\n")
 
 
 def spawn_interface():
