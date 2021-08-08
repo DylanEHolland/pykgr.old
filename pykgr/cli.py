@@ -40,10 +40,11 @@ def spawn_interface():
 
     if args.verbose:
         print("Looking for environment in %s..." % config.main_directory, end=' ')
-    if not os.path.isfile(compiler):
+
+    if not os.path.isfile(compiler) and not args.build_toolchain:
         print("\nToolchain doesn't exist!")
     else:
-        print("Found!")
+        print("Found "+compiler+"!")
 
     if args.build_toolchain:
         if args.verbose:
