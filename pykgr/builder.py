@@ -22,11 +22,11 @@ class Builder(object):
         package_to_build.__build__()
 
     def build_toolchain(self):
-        binutils = import_from_string("base.toolchain.binutils.Binutils")
-        #gcc = import_from_string("toolchain.Gcc")
+        binutils = import_from_string("base.packages.binutils.Binutils")
+        gcc = import_from_string("base.packages.gcc.Gcc")
 
         self.build(binutils)
-        #self.build(gcc)
+        self.build(gcc)
 
     def build_library(self):
         lib = import_from_string("toolchain.glibc")

@@ -8,7 +8,7 @@ pykgr.config.setup("/tmp/pykgr_test")
 
 def test_loading_module():
     path = get_current_path()
-    base_module = f"{path}/base"
+    base_module = path+"base"
     add_module(base_module)
 
     assert base_module in sys.path

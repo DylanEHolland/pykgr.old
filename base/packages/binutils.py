@@ -2,7 +2,7 @@ import pykgr
 import os
 
 
-class binutils(pykgr.Package):
+class Binutils(pykgr.Package):
     file_url = "http://ftp.gnu.org/gnu/binutils/binutils-2.35.tar.xz"
     file_name = "binutils-2.35.tar.xz"
     name = "binutils"
