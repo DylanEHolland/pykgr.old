@@ -1,4 +1,4 @@
-from pykgr import config
+import pykgr
 import sys
 import os
 
@@ -31,18 +31,31 @@ def load_config(args):
         "%s/pykgr.json" % os.environ["PWD"]
     ]:
         if os.path.isfile(conf_file):
-            config.from_file(conf_file)
+            pykgr.config.from_file(conf_file)
 
     if args.verbose:
-        config.verbose = args.verbose
+        pykgr.config.verbose = args.verbose
+
+
+def replace_vars(instance, text):
+    for key in instance.keys():
+        string_to_find = "{%s}" % key
+        if string_to_find in text:
+            value = object.__getattribute__(instance, key)
+            text = text.replace(
+                string_to_find,
+                value
+            )
+
+    return text
 
 
 def setup_paths(args):
     # Setup pythonpath so we can call local package
     # classes.
 
-    if config.toolchain_package_module:
-        add_module(config.toolchain_package_module)
+    if pykgr.config.toolchain_package_module:
+        add_module(pykgr.config.toolchain_package_module)
 
     if args.package_module:
         packages = args.package_module

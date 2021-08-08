@@ -1,5 +1,7 @@
 import os
 import json
+from pykgr.subroutines import replace_vars
+
 
 class Configuration(object):
     prefix = "pykgr_"
@@ -79,19 +81,6 @@ def getenv(prefix, key, default_value = None):
     if not value:
         value = default_value
     return value
-
-
-def replace_vars(instance, text):
-    for key in instance.keys():
-        string_to_find = "{%s}" % key
-        if string_to_find in text:
-            value = object.__getattribute__(instance, key)
-            text = text.replace(
-                string_to_find,
-                value
-            )
-
-    return text
 
 
 conf = Configuration()
