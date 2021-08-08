@@ -27,7 +27,7 @@ class Package(object):
     no_build_dir = False
 
     def __build__(self):
-        print("Building", self)
+        print("\nBuilding", self.file_url)
         self.get_code()
         self.prepare()
         self.generate()
@@ -59,12 +59,12 @@ class Package(object):
         self.shell.command(
             "%s/configure" % self.working_directory,
             "--prefix=%s" % pykgr.config.packages_directory
-        ).run(display_output = True)
+        ).run()
 
     def decompress(self):
         if os.path.exists(self.code_directory):
             print("Decompressed code exists, removing...")
-            self.shell.command("rm", "-rfv", self.code_directory).run(display_output = True)
+            self.shell.command("rm", "-rfv", self.code_directory).run()
 
         self.untar()
 
@@ -75,9 +75,7 @@ class Package(object):
             "wget", 
             "-c",
             self.file_url.encode()
-        ).run(
-            display_output = True
-        )
+        ).run()
 
     def generate(self):
         self.make()
@@ -96,8 +94,7 @@ class Package(object):
 
         self.shell.make(
             "-j%s" % pykgr.config.make_opts,
-            "install",
-            display_output = True
+            "install"
         )
 
     def make(self):
@@ -106,7 +103,7 @@ class Package(object):
         else:
             self.shell.cd(self.build_directory)
 
-        self.shell.make("-j%s" % pykgr.config.make_opts, display_output = True)
+        self.shell.make("-j%s" % pykgr.config.make_opts)
 
     def prepare(self):
         self.shell.cd(self.working_directory)
@@ -131,8 +128,7 @@ class Package(object):
             "xvf",
             pykgr.config.source_directory + "/tarballs/" + self.file_name,
             "-C",
-            pykgr.config.source_directory,
-            display_output = True
+            pykgr.config.source_directory
         )
 
 

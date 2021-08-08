@@ -92,10 +92,10 @@ class Command:
 
         if pykgr.config.verbose:
             for line in iter(process.stdout.readline, b''):
-                sys.stdout.write(line.decode("utf-8", "strict") )
+                sys.stdout.write(line.decode("utf-8", "strict"))
 
         output, error = process.communicate()
         if type(output) == bytes:
-            output = output.decode()
+            output = output.decode("utf-8", "strict")
 
         return output
