@@ -13,6 +13,7 @@ def arguments():
     ap.add_argument("--init", action="store_true")
     ap.add_argument("--package-file", "-p", help="Pass a package class to be built and installed")
     ap.add_argument("--package-module", "-pm", action="append")
+    ap.add_argument("--verbose", "-v", action="store_true")
     
     return ap.parse_args()
 

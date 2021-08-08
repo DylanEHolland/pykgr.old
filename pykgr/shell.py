@@ -1,7 +1,7 @@
 import os
 import subprocess
 import sys
-
+import pykgr
 
 class Shell(object):
     working_dir = None
@@ -91,7 +91,7 @@ class Command:
             stderr=subprocess.STDOUT
         )
 
-        if display_output:
+        if pykgr.config.verbose:
             for line in iter(process.stdout.readline, b''):
                 sys.stdout.write(line.decode("utf-8", "strict") )
 

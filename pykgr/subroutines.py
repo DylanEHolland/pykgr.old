@@ -14,12 +14,9 @@ def import_from_string(string):
     # e.g. example.class
 
     packages = string.split(".")
-    print(packages, packages[0:-1], packages[-1])
     if len(packages):
         main_package = ".".join(packages[0:-1])
         main_class = packages[-1]
-        print(main_class)
-        #potential_module = __import__(packages[0], fromlist=[packages[1]])
         potential_module = __import__(main_package, fromlist=[main_class])
         package_class = getattr(potential_module, main_class)
 
@@ -35,6 +32,9 @@ def load_config(args):
     ]:
         if os.path.isfile(conf_file):
             config.from_file(conf_file)
+
+    if args.verbose:
+        config.verbose = args.verbose
 
 
 def setup_paths(args):

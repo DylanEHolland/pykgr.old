@@ -56,10 +56,17 @@ class Configuration(object):
         self.local_package_module = getenv(self.prefix, "local_package_module", None)
 
         self.make_opts = getenv(self.prefix, "make_opts", "1")
+        self.verbose = getenv(self.prefix, "verbose", False)
 
 
 def envget(key):
-    return os.environ.get(key)
+    value = os.environ.get(key)
+    if value:
+        if value.strip() == "True":
+            value = True
+        elif value.strip() == "False":
+            value = False
+    return value
 
 
 def getenv(prefix, key, default_value = None):

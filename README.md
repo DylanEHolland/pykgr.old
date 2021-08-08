@@ -13,13 +13,13 @@ You can pass any arbitrary directory with submodules to then use, e.g. this
 directory
 
     . mypackages
-        . tools
+        . recipes
             . hello.py
             . python.py
 
 would allow you to install vim like so
 
-`python -m pykgr --init --build-toolchain -p mypackages.tools.hello.Hello`
+`python -m pykgr --init --build-toolchain -p mypackages.recipes.hello.Hello`
 
 It can also be used in code, like this
 
