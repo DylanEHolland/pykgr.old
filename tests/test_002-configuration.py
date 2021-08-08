@@ -4,11 +4,12 @@ from pykgr.subroutines import load_config
 
 
 def test_configuration_files():
-    home = os.environ.get("HOME")
+    conf_file = "%s/.pykgr.json" % os.environ.get("HOME")
     initial_dir = pykgr.config.main_directory
-    pykgr.config.from_file("%s/.pykgr.json" % home)
+    pykgr.config.from_file(conf_file)
 
-    assert initial_dir != pykgr.config.main_directory
+    if os.path.isfile(conf_file):
+        assert initial_dir != pykgr.config.main_directory
 
 
 def test_load_config():

@@ -40,3 +40,13 @@ env.build_package(Hello)
 Which will build the package.  The goal is to allow people to maintain a git repo
 similar to mypackages, that they could then pull from and build a root-free system
 of packages that, by default, install to $HOME/pykgr.
+
+## Tests
+
+You can run all tests running this in the root of the repo (please 
+create a `~/.pykgr.conf` file for all tests to run) 
+
+`PYTHONPATH="./:./tests pytest -m tests`
+
+They should all pass, as I've been running them before 
+each push.
