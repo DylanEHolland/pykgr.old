@@ -26,33 +26,39 @@ def spawn_interface():
     setup_paths(args)
 
     if args.init:
-        print("Initializing")
+        if args.verbose:
+            print("Initializing")
         env = initialize()
     else:
         env = Environment()
 
     if config.toolchain_package_module:
-        print("Using toolchain module from", config.toolchain_package_module)
+        if args.verbose:
+            print("Using toolchain module from", config.toolchain_package_module)
 
     compiler = "%s/bin/gcc" % config.builder_directory
 
-    print("Looking for environment in %s..." % config.main_directory, end=' ')
+    if args.verbose:
+        print("Looking for environment in %s..." % config.main_directory, end=' ')
     if not os.path.isfile(compiler):
         print("\nToolchain doesn't exist!")
     else:
         print("Found!")
 
     if args.build_toolchain:
-        print("Building compiler")
+        if args.verbose:
+            print("Building compiler")
         env.builder.build_toolchain()
         # if not os.path.exists("%s/lib" % config.library_directory):
         #     print("Building glibc")
         #     env.builder.build_library()
     
     if args.build_library:
-        print("Building glibc")
+        if args.verbose:
+            print("Building glibc")
         env.builder.build_library()
 
     if args.package_file:
-        print("Building", args.package_file)
+        if args.verbose:
+            print("Building", args.package_file)
         env.build_package(args.package_file)

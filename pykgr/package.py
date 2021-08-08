@@ -27,7 +27,9 @@ class Package(object):
     no_build_dir = False
 
     def __build__(self):
-        print("\nBuilding", self.file_url)
+        if pykgr.config.verbose:
+            print("\nBuilding", self.file_url)
+
         self.get_code()
         self.prepare()
         self.generate()
@@ -63,7 +65,8 @@ class Package(object):
 
     def decompress(self):
         if os.path.exists(self.code_directory):
-            print("Decompressed code exists, removing...")
+            if pykgr.config.verbose:
+                print("Decompressed code exists, removing...")
             self.shell.command("rm", "-rfv", self.code_directory).run()
 
         self.untar()
