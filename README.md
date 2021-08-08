@@ -2,11 +2,12 @@
 
 ## A simple, user focused, build system (for learning purposes)
 
-You will want to edit the pykgr.json file in the root of this repo to point to the
-repos location.  Alternatively you can setup a .pykgr.json and pip install it (but
-use any other dir as the one in this directory will overwrite certain configurations.)
+You will want to edit the pykgr.json file in the root of this repo to 
+point to the repos location.  Alternatively you can setup a 
+.pykgr.json and pip install it (but use any other dir as the one in 
+this directory will overwrite certain configurations.)
 
-Then just `python -m pykgr --init -p packages.python`
+Then just `python -m pykgr --init --build-toolchain -p base.packages.python.Python`
 
 The packages module is located in the `base` directory which is imported by default.
 You can pass any arbitrary directory with submodules to then use, e.g. this 
@@ -19,7 +20,7 @@ directory
 
 would allow you to install vim like so
 
-`python -m pykgr --init --build-toolchain -p mypackages.recipes.hello.Hello`
+`python -m pykgr -p mypackages.recipes.hello.Hello`
 
 It can also be used in code, like this
 
