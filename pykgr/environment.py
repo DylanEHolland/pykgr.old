@@ -24,8 +24,7 @@ class Environment(object):
 
 
 def build_directories():
-    if not os.path.exists(config.root_directory):
-        os.mkdir(config.root_directory)
+    print("Creating directories")
     for d in [
         config.main_directory,
         config.source_directory,

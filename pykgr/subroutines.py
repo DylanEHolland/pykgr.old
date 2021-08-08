@@ -33,6 +33,10 @@ def load_config(args):
         if os.path.isfile(conf_file):
             pykgr.config.from_file(conf_file)
 
+    pykgr.config.setup(
+        main_dir=pykgr.config.main_directory
+    )
+
     if args.verbose:
         pykgr.config.verbose = args.verbose
 

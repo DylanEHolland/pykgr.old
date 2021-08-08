@@ -5,6 +5,17 @@ from pykgr.subroutines import replace_vars
 
 class Configuration(object):
     prefix = "pykgr_"
+    main_directory = None
+    builder_directory = None
+    library_directory = None
+    packages_directory = None
+    source_directory = None
+    source_tarballs_directory = None
+    toolchain_package_module = None
+    main_package_module = None
+    local_package_module = None
+    make_opts = None
+    verbose = None
 
     def __init__(self):
         self.setup()
@@ -33,6 +44,8 @@ class Configuration(object):
                     value = conf[k]
                     if "{" in value:
                         value = replace_vars(self, value)
+                        os.environ[self.prefix+k] = value
+
                     setattr(self, k, value)
 
     def keys(self):
@@ -42,9 +55,8 @@ class Configuration(object):
             if "__" not in key and key != "prefix" and not callable(getattr(self, key))
         ]
 
-    def setup(self, root_dir=None):
-        self.root_directory = root_dir if root_dir else getenv(self.prefix, "root_directory", envget("HOME"))
-        self.main_directory = getenv(self.prefix, "main_directory", "%s/pykgr" % self.root_directory)
+    def setup(self, main_dir=None):
+        self.main_directory = main_dir if main_dir else getenv(self.prefix, "main_directory", "%s/pykgr" % os.environ.get("HOME"))
         
         self.builder_directory = getenv(self.prefix, "builder_directory", "%s/builder" % self.main_directory)
         self.library_directory = getenv(self.prefix, "library_directory", "%s/library" % self.main_directory)
