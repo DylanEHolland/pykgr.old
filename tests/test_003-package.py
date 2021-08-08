@@ -29,8 +29,8 @@ def test_build_packages():
     env.build_package(Hello)
     assert os.path.exists(pykgr.config.packages_directory+"/bin/hello") is True
 
-    env.build_package(Vim)
-    assert os.path.exists(pykgr.config.packages_directory+"/bin/vim") is True
+    # env.build_package(Vim)
+    # assert os.path.exists(pykgr.config.packages_directory+"/bin/vim") is True
 
 
 if __name__ == "__main__":
