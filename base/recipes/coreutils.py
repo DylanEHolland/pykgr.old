@@ -8,7 +8,3 @@ class Coreutils(pykgr.Package):
     version = "8.32"
     no_build_dir = True
 
-    # def pre_configure_run(self):
-    #     self.shell.command(
-    #         "./bootstrap"
-    #     ).run()
