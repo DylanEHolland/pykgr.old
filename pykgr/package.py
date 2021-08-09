@@ -35,13 +35,18 @@ class Package(object):
         self.generate()
 
     def __init__(self, **kwargs):
+        dir_name = "%s-%s" % (
+            self.name,
+            self.version
+        )
+
+        if 'alt_dir_name' in dir(self):
+            dir_name = self.alt_dir_name
+
         self.shell = Shell(PWD=pykgr.config.source_directory)
         self.code_directory = "%s/%s" % (
             pykgr.config.source_directory,
-            "%s-%s" % (
-                self.name,
-                self.version
-            )
+            dir_name
         )
 
         self.working_directory = self.code_directory

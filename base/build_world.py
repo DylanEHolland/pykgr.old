@@ -3,5 +3,7 @@ ORDER = [
   "binutils",
   "gcc",
   "m4",
+  "ncurses",
+  "bash",
   "python"
 ]
