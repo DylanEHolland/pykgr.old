@@ -18,6 +18,12 @@ def test_builder_setup():
     builder.build_toolchain()
 
 
+def test_build_world():
+    builder = pykgr.Builder(directory=pykgr.config.builder_directory)
+    builder.build_world()
+
+
 if __name__ == "__main__":
-    test_loading_module()
-    test_builder_setup()
+    # test_loading_module()
+    # test_builder_setup()
+    test_build_world()

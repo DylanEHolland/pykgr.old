@@ -8,7 +8,7 @@ class Package(object):
     # This class contains the methods needed to compile most
     # gnu and open source projects.
     #
-    # For packages that aren't compiled you can overload any
+    # For recipes that aren't compiled you can overload any
     # method needed to change the flow (as well as in derived classes,
     # see base/toolchain module for package derivatives.)
 
@@ -95,10 +95,13 @@ class Package(object):
         else:
             self.shell.cd(self.build_directory)
 
-        self.shell.make(
-            "-j%s" % pykgr.config.make_opts,
-            "install"
-        )
+        if 'alt_install' in self.__dict__:
+            self.alt_install()
+        else:
+            self.shell.make(
+                "-j%s" % pykgr.config.make_opts,
+                "install"
+            )
 
     def make(self):
         if self.no_build_dir:

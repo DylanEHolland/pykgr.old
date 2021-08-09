@@ -5,7 +5,7 @@ from pykgr.subroutines import import_from_string
 class Builder(object):
     data = None
 
-    def __init__(self, **kwargs):
+    def     __init__(self, **kwargs):
         self.data = BuilderData(**kwargs)
 
         if not self.data.directory:
@@ -19,7 +19,26 @@ class Builder(object):
             package_class = import_from_string(package_class)
 
         package_to_build = package_class()
+        print("Building %s..." % package_to_build.name, end=' ')
         package_to_build.__build__()
+        print("Done.")
+
+    def build_world(self, module = None):
+        if not module:
+            module = 'base'
+
+        module_to_build = import_from_string("%s.build_world" % module)
+        for pkg in module_to_build.ORDER:
+            recipe_name = "%s.recipes.%s.%s" % (
+                module,
+                pkg,
+                "%s%s" % (
+                    pkg[0].upper(),
+                    pkg[1:]
+                )
+            )
+
+            self.build(recipe_name)
 
     def build_toolchain(self):
         binutils = import_from_string("base.recipes.binutils.Binutils")

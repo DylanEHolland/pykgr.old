@@ -15,10 +15,13 @@ def import_from_string(string):
 
     packages = string.split(".")
     if len(packages):
-        main_package = ".".join(packages[0:-1])
-        main_class = packages[-1]
-        potential_module = __import__(main_package, fromlist=[main_class])
-        package_class = getattr(potential_module, main_class)
+        if len(packages) > 1:
+            main_package = ".".join(packages[0:-1])
+            main_class = packages[-1]
+            potential_module = __import__(main_package, fromlist=[main_class])
+            package_class = getattr(potential_module, main_class)
+        else:
+            package_class = __import__(packages[0])
 
         return package_class
 
