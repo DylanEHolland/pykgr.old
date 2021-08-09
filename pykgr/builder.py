@@ -22,8 +22,8 @@ class Builder(object):
         package_to_build.__build__()
 
     def build_toolchain(self):
-        binutils = import_from_string("base.packages.binutils.Binutils")
-        gcc = import_from_string("base.packages.gcc.Gcc")
+        binutils = import_from_string("base.recipes.binutils.Binutils")
+        gcc = import_from_string("base.recipes.gcc.Gcc")
 
         self.build(binutils)
         self.build(gcc)
