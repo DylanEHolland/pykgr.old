@@ -7,9 +7,3 @@ class Glibc(pykgr.Package):
     file_name = "glibc-2.32.tar.xz"
     name = "glibc"
     version = "2.32"
-      
-    def configure(self):
-        self.shell.command(
-            "%s/configure" % self.code_directory,
-            "--prefix=%s" % pykgr.config.library_directory
-        ).run(display_output = True)

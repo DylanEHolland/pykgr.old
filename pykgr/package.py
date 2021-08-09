@@ -78,12 +78,12 @@ class Package(object):
 
     def fetch(self):
         self.shell.cd(pykgr.config.source_tarballs_directory)
-
         self.shell.command(
             "wget", 
             "-c",
             self.file_url.encode()
         ).run()
+        #exit(-1)
 
     def generate(self):
         self.make()

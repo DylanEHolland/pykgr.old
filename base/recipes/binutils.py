@@ -12,5 +12,5 @@ class Binutils(pykgr.Package):
         self.shell.command(
             "%s/configure" % self.code_directory,
             "--prefix=%s" % pykgr.config.builder_directory,
-            "--with-lib-path=%s/lib" % pykgr.config.library_directory
+            "--with-lib-path=%s/lib" % pykgr.config.packages_directory
         ).run(display_output = True)
