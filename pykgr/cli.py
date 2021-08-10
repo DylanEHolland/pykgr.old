@@ -10,6 +10,7 @@ def arguments():
     
     ap.add_argument("--build-library", action="store_true")
     ap.add_argument("--build-toolchain", action="store_true")
+    ap.add_argument("--build-world", action="store_true")
     ap.add_argument("--destroy", "-d", action="store_true")
     ap.add_argument("--init", action="store_true")
     ap.add_argument("--package-file", "-p", help="Pass a package class to be built and installed")
@@ -58,10 +59,13 @@ def spawn_interface():
         #     print("Building glibc")
         #     env.builder.build_library()
     
-    if args.build_library:
-        if args.verbose:
-            print("Building glibc")
-        env.builder.build_library()
+    # if args.build_library:
+    #     if args.verbose:
+    #         print("Building glibc")
+    #     env.builder.build_library()
+
+    if args.build_world:
+        env.builder.build_world()
 
     if args.package_file:
         if args.verbose:

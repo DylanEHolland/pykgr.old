@@ -29,13 +29,23 @@ class Builder(object):
 
         module_to_build = import_from_string("%s.build_world" % module)
         for pkg in module_to_build.ORDER:
-            recipe_name = "%s.recipes.%s.%s" % (
-                module,
-                pkg,
-                "%s%s" % (
+            class_name = ""
+            if '_' in pkg:
+                for name in pkg.split("_"):
+                    class_name += "%s%s" % (
+                        name[0].upper(),
+                        name[1:]
+                    )
+            else:
+                class_name = "%s%s" % (
                     pkg[0].upper(),
                     pkg[1:]
                 )
+
+            recipe_name = "%s.recipes.%s.%s" % (
+                module,
+                pkg,
+                class_name
             )
 
             self.build(recipe_name)
