@@ -69,8 +69,5 @@ def setup_paths(args):
         for pm in packages:
             add_module(pm)
 
-    print("\n=\nFinal $PYTHONPATH:")
-    for d in sys.path:
-        if len(d):
-            print("\t%s" % d)
-    print("==\n")
+    print("Using main_directory: %s" % pykgr.config.main_directory)
+    print("Using python paths: %s" % sys.path)

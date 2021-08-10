@@ -39,15 +39,19 @@ class Configuration(object):
             fp.close()
 
         if conf:
+            # Load
             keys = self.keys()
             for k in conf:
                 if k in keys:
+                    envar_index = "%s%s" % (self.prefix, k)
                     value = conf[k]
-                    if "{" in value:
-                        value = replace_vars(self, value)
-                        os.environ[self.prefix+k] = value
+                    if envar_index not in os.environ:
+                        if "{" in value:
+                            value = replace_vars(self, value)
+                            print("\n\n\n", self.prefix+k, "\n")
 
-                    setattr(self, k, value)
+                        os.environ[envar_index] = value
+                        setattr(self, k, value)
 
     def keys(self):
         return [
@@ -57,6 +61,7 @@ class Configuration(object):
         ]
 
     def setup(self, main_dir=None):
+        print("\n", main_dir, "\n")
         self.main_directory = main_dir if main_dir else getenv(self.prefix, "main_directory", "%s/pykgr" % os.environ.get("HOME"))
         
         self.builder_directory = getenv(self.prefix, "builder_directory", "%s/builder" % self.main_directory)
