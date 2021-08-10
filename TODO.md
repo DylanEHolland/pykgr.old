@@ -2,7 +2,7 @@
 
 ## 0.3
 
-- [ ] Finish base LFS package recipes
+- [X] Finish base LFS package recipes
 
 - [ ] Fix bug disallowing directory changes via 
   `pykgr_main_directory`
