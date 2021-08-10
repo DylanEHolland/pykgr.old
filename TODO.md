@@ -4,7 +4,7 @@
 
 - [X] Finish base LFS package recipes
 
-- [ ] Fix bug disallowing directory changes via 
+- [X] Fix bug disallowing directory changes via 
   `pykgr_main_directory`
   
 - [ ] Get second pass GCC working/figure out 
