@@ -9,5 +9,6 @@ ORDER = [
   "ncurses",
   "bash",
   "coreutils",
+  "file_tool"
   "python"
 ]

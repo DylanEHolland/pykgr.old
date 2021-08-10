@@ -10,6 +10,7 @@ def arguments():
     
     ap.add_argument("--build-library", action="store_true")
     ap.add_argument("--build-toolchain", action="store_true")
+    ap.add_argument("--destroy", "-d", action="store_true")
     ap.add_argument("--init", action="store_true")
     ap.add_argument("--package-file", "-p", help="Pass a package class to be built and installed")
     ap.add_argument("--package-module", "-pm", action="append")
@@ -31,6 +32,9 @@ def spawn_interface():
         env = initialize()
     else:
         env = Environment()
+
+    if args.destroy:
+        env.destroy()
 
     if config.toolchain_package_module:
         if args.verbose:

@@ -1,5 +1,6 @@
 import pykgr
 import os
+from pykgr.environment import initialize
 pykgr.config.setup("/tmp/pykgr_test")
 
 
@@ -24,13 +25,14 @@ class Vim(pykgr.Package):
 
 
 def test_build_packages():
+    initialize()
     env = pykgr.Environment()
 
     env.build_package(Hello)
     assert os.path.exists(pykgr.config.packages_directory+"/bin/hello") is True
 
-    # env.build_package(Vim)
-    # assert os.path.exists(pykgr.config.packages_directory+"/bin/vim") is True
+    env.build_package(Vim)
+    assert os.path.exists(pykgr.config.packages_directory+"/bin/vim") is True
 
 
 if __name__ == "__main__":

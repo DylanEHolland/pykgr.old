@@ -19,7 +19,7 @@ class Builder(object):
             package_class = import_from_string(package_class)
 
         package_to_build = package_class()
-        print("Building %s..." % package_to_build.name, end=' ')
+        print("Building %s..." % package_to_build.name)
         package_to_build.__build__()
         print("Done.")
 

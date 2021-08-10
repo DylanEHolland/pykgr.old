@@ -7,6 +7,7 @@ class Configuration(object):
     prefix = "pykgr_"
     main_directory = None
     builder_directory = None
+    destroy = None
     library_directory = None
     packages_directory = None
     source_directory = None
